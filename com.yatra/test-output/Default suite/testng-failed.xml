@@ -6,7 +6,9 @@
       <class name="TestScripts.SignUpTest">
         <methods>
           <include name="browserSetUP"/>
-          <include name="signUp"/>
+          <include name="afterSuit"/>
+          <include name="beforeSuit"/>
+          <include name="signUp" invocation-numbers="0"/>
           <include name="browserTermination"/>
         </methods>
       </class> <!-- TestScripts.SignUpTest -->

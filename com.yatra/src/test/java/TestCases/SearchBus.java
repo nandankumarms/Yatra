@@ -12,7 +12,7 @@ public class SearchBus extends BaseTest{
 		
 	
 	WelcomePage welcome=new WelcomePage(driver);
-	welcome.clickBusesLink();
+	//welcome.clickBusesLink();
 	BusesPage bus=new BusesPage(driver);
 	bus.clickFromTextField();
 	bus.selectPlace("Bangalore, Karnataka");

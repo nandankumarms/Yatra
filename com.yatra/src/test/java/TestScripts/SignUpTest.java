@@ -9,6 +9,9 @@ import org.openqa.selenium.support.ui.Select;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
+import com.pomLibrary.RegisterPage;
+import com.pomLibrary.WelcomePage;
+import com.relevantcodes.extentreports.LogStatus;
 import com.yatra.genericLibrary.BaseTest;
 import com.yatra.genericLibrary.ReadTestData;
 
@@ -20,6 +23,10 @@ public class SignUpTest extends BaseTest{
 	
 	@Test(dataProvider = "SignUpdata")
 	public void signUp(String email, String phoneNumber, String password, String title, String firstName, String lastName) {
+		initObjects();
+		WelcomePage welcome=new WelcomePage(driver);
+		RegisterPage register=new RegisterPage(driver);
+		test=report.startTest("Register");
 		//Switch to iframe
 //		driver.switchTo().frame("notification-frame-~10cb42c72");
 		//Close notification window
@@ -29,36 +36,38 @@ public class SignUpTest extends BaseTest{
 //		driver.switchTo().parentFrame();
 		
 		//Click on my account
-		driver.findElement(By.partialLinkText("My Account")).click();
-		
+		clickOnTheElement(welcome.getMyAccountLink()); 
+		test.log(LogStatus.INFO, "Clicked on My account link");
+				
 		//Click on sign up button
-		driver.findElement(By.id("SignUpBtn")).click();
+		clickOnTheElement(welcome.getSignUpButton());
 		
-		//Enter email/password
-		driver.findElement(By.id("login-input")).sendKeys(email);
-		
+				
+		//Enter email/phone number
+		enterValueToTextfield(register.getEmailIdPhoneNumberTextField(), email);
+		test.log(LogStatus.INFO, test.addScreenCapture(takescreenShot()));		
 		//Click on continue button
-		driver.findElement(By.id("login-continue-btn")).click();
-		
+		clickOnTheElement(register.getContinueButton());
+				
 		//Enter your mobile number
-		driver.findElement(By.id("signup-mobile-number")).sendKeys(phoneNumber);
-		
+		enterValueToTextfield(register.getMobileNumberTextFiled(), phoneNumber);
+				///test.log(LogStatus.INFO, scree);
 		//Create password
-		driver.findElement(By.id("signup-password")).sendKeys(password);
-		
+		enterValueToTextfield(register.getCreatePasswordTextField(), password);
+		test.log(LogStatus.PASS, "signed in");		
 		//Select Prefix/ Title
-		WebElement titleDropdown=driver.findElement(By.id("signup-user-designation"));
-		Select sel=new Select(titleDropdown);
-		sel.selectByVisibleText(title);
-		
+		selectOptionByVisibleText(register.getTitleDropdown(), title);
+				
 		//Enter your first name
-		driver.findElement(By.id("signup-user-first-name")).sendKeys(firstName);
-		
+		enterValueToTextfield(register.getFirstNameTextField(), firstName);
+				
 		//Enter last name
-		driver.findElement(By.id("signup-user-last-name")).sendKeys(lastName);
-		
+		enterValueToTextfield(register.getLastNameTextField(), lastName);
+				
 		//click on create account
-		driver.findElement(By.id("signup-form-continue-btn")).click();
+		clickOnTheElement(register.getCreateAccoutButton());
+		
+		
 		
 	}
 
